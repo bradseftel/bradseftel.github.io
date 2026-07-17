@@ -1,0 +1,3 @@
+# Saved browser pages and their bundled third-party resources are local references,
+# not deployable site assets.
+/images/
