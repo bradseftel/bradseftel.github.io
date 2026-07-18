@@ -75,6 +75,7 @@ header {
   border-bottom: 1px solid var(--line);
 }
 .brand {
+  text-decoration: none;
   font-family: 'IBM Plex Mono', monospace;
   font-weight: 600;
   font-size: 15px;
@@ -239,6 +240,56 @@ h2 {
   font-size: 26px;
   font-weight: 600;
   color: var(--paper);
+}
+
+.about-copy {
+  max-width: 68ch;
+}
+.about-copy p {
+  color: var(--paper-dim);
+  margin-bottom: 16px;
+}
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  list-style: none;
+}
+.skill-list li {
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  color: var(--line-bright);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.service-card {
+  display: flex;
+  flex-direction: column;
+}
+.service-card .card-link { margin-top: auto; padding-top: 18px; }
+
+.service-page main { padding-bottom: 32px; }
+.service-hero { padding: 72px 0 56px; border-top: 0; }
+.service-hero h1 { max-width: 16ch; }
+.service-intro { max-width: 62ch; }
+.service-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.service-details .card ul { margin: 14px 0 0 18px; color: var(--paper-dim); }
+.service-details .card li + li { margin-top: 8px; }
+.service-cta { margin-top: 24px; }
+
+@media (max-width: 720px) {
+  .service-grid, .service-details { grid-template-columns: 1fr; }
 }
 
 .grid3 {
