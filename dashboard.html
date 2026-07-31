@@ -65,6 +65,39 @@
   }
   .portfolio-bar a{color:var(--cyan);text-decoration:none;}
   .portfolio-bar a:hover{text-decoration:underline;text-underline-offset:4px;}
+
+  /* ---------- welcome dialog ---------- */
+  .welcome-dialog{
+    width:min(620px,calc(100% - 32px));max-height:calc(100vh - 32px);
+    margin:auto;padding:0;color:var(--ink);background:var(--navy-900);
+    border:1px solid var(--cyan);overflow:auto;
+    box-shadow:0 28px 80px rgba(0,0,0,.5);
+  }
+  .welcome-dialog[open]{animation:dialog-in .35s cubic-bezier(.2,.8,.2,1) both;}
+  .welcome-dialog::backdrop{
+    background:rgba(4,9,19,.82);backdrop-filter:blur(4px);
+    animation:backdrop-in .25s ease-out both;
+  }
+  .welcome-shell{position:relative;padding:clamp(24px,5vw,42px);}
+  .welcome-shell::before,.welcome-shell::after{
+    content:"";position:absolute;width:16px;height:16px;border-color:var(--amber);border-style:solid;
+  }
+  .welcome-shell::before{top:10px;left:10px;border-width:1px 0 0 1px;}
+  .welcome-shell::after{right:10px;bottom:10px;border-width:0 1px 1px 0;}
+  .welcome-kicker{font:600 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+  .welcome-dialog h2{font:600 clamp(22px,4vw,30px)/1.2 var(--mono);max-width:18ch;}
+  .welcome-intro{margin-top:14px;color:var(--ink-muted);max-width:54ch;line-height:1.65;}
+  .welcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:28px 0;counter-reset:welcome;}
+  .welcome-step{border:1px solid var(--line);padding:16px;counter-increment:welcome;}
+  .welcome-step::before{content:"0" counter(welcome);display:block;margin-bottom:9px;font:600 10px var(--mono);color:var(--cyan);}
+  .welcome-step h3{font:600 12px var(--mono);margin-bottom:6px;}
+  .welcome-step p{font-size:12px;line-height:1.5;color:var(--ink-muted);}
+  .welcome-actions{display:flex;align-items:center;justify-content:space-between;gap:18px;}
+  .welcome-note{font:10px/1.5 var(--mono);color:var(--ink-faint);}
+  .welcome-enter{border:0;background:var(--amber);color:var(--navy-950);padding:12px 18px;cursor:pointer;white-space:nowrap;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;}
+  .welcome-enter:hover{background:#ffc260;}
+  @keyframes dialog-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+  @keyframes backdrop-in{from{opacity:0}to{opacity:1}}
   .topbar{
     display:flex;justify-content:space-between;align-items:flex-end;
     flex-wrap:wrap;gap:16px;
@@ -214,17 +247,37 @@
   }
   @media (max-width:520px){
     .kpi-grid{grid-template-columns:1fr;}
+    .welcome-grid{grid-template-columns:1fr;}
+    .welcome-actions{align-items:flex-start;flex-direction:column;}
   }
 
   :focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
 
   @media (prefers-reduced-motion: reduce){
     .dot,.cursor{animation:none;}
+    .welcome-dialog[open],.welcome-dialog::backdrop{animation:none;}
     *{transition:none !important;}
   }
 </style>
 </head>
 <body>
+
+<dialog class="welcome-dialog" id="welcomeDialog" aria-labelledby="welcomeTitle" aria-describedby="welcomeIntro">
+  <div class="welcome-shell">
+    <div class="welcome-kicker">// Dashboard field guide</div>
+    <h2 id="welcomeTitle">A small business, at a glance.</h2>
+    <p class="welcome-intro" id="welcomeIntro">This interactive concept brings the numbers and tasks a hardware store owner checks most often into one focused operations view.</p>
+    <div class="welcome-grid">
+      <div class="welcome-step"><h3>Change the range</h3><p>Use 7D, 30D, or 90D to recalculate revenue and key performance indicators.</p></div>
+      <div class="welcome-step"><h3>Inspect the detail</h3><p>Hover over chart bars, review inventory mix, and click a booking to highlight it.</p></div>
+      <div class="welcome-step"><h3>Sort the work</h3><p>Select any bookings column heading to reorder the schedule.</p></div>
+    </div>
+    <div class="welcome-actions">
+      <p class="welcome-note">Fictional business · generated demo data</p>
+      <button class="welcome-enter" id="welcomeEnter" type="button">Explore dashboard →</button>
+    </div>
+  </div>
+</dialog>
 
 <div class="portfolio-bar">
   <a href="/" aria-label="Back to Brad Seftel portfolio">← Brad Seftel / Portfolio</a>
@@ -317,6 +370,15 @@
 <script>
 (function(){
   "use strict";
+
+  /* ---------------- welcome guide ---------------- */
+  const welcomeDialog = document.getElementById('welcomeDialog');
+  const welcomeEnter = document.getElementById('welcomeEnter');
+  welcomeDialog.showModal();
+  welcomeEnter.addEventListener('click', () => welcomeDialog.close());
+  welcomeDialog.addEventListener('click', event => {
+    if(event.target === welcomeDialog) welcomeDialog.close();
+  });
 
   /* ---------------- utilities ---------------- */
   function seeded(seed){
