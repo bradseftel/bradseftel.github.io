@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bradseftel.dev/</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-31</lastmod>
   </url>
   <url>
     <loc>https://bradseftel.dev/services/website-development.html</loc>
@@ -10,6 +10,10 @@
   </url>
   <url>
     <loc>https://bradseftel.dev/services/custom-business-automation.html</loc>
-    <lastmod>2026-07-18</lastmod>
+    <lastmod>2026-07-31</lastmod>
+  </url>
+  <url>
+    <loc>https://bradseftel.dev/dashboard.html</loc>
+    <lastmod>2026-07-31</lastmod>
   </url>
 </urlset>
